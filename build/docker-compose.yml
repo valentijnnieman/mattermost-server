@@ -7,15 +7,18 @@ services:
     tmpfs: /var/lib/mysql
     volumes:
      - "./docker/mysql.conf.d:/etc/mysql/conf.d"
+    mem_limit: 1g
   postgres:
     extends:
         file: docker-compose.common.yml
         service: postgres
     tmpfs: /var/lib/postgresql/data
+    mem_limit: 1g
   minio:
     extends:
         file: docker-compose.common.yml
         service: minio
+    mem_limit: 1g
   inbucket:
     extends:
         file: docker-compose.common.yml
@@ -28,6 +31,7 @@ services:
     extends:
         file: docker-compose.common.yml
         service: elasticsearch
+    mem_limit: 1g
   redis:
     extends:
         file: docker-compose.common.yml
