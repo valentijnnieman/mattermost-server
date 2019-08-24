@@ -13,19 +13,22 @@ services:
         file: docker-compose.common.yml
         service: postgres
     tmpfs: /var/lib/postgresql/data
-    mem_limit: 1g
+    mem_limit: 500m
   minio:
     extends:
         file: docker-compose.common.yml
         service: minio
+    mem_limit: 500m
   inbucket:
     extends:
         file: docker-compose.common.yml
         service: inbucket
+    mem_limit: 200m
   openldap:
     extends:
         file: docker-compose.common.yml
         service: openldap
+    mem_limit: 800m
   elasticsearch:
     extends:
         file: docker-compose.common.yml
@@ -35,6 +38,7 @@ services:
     extends:
         file: docker-compose.common.yml
         service: redis
+    mem_limit: 100m
 
   start_dependencies:
     image: mattermost/mattermost-wait-for-dep:latest
