@@ -268,6 +268,23 @@ else
 endif
 	./scripts/test.sh "$(GO)" "$(GOFLAGS)" "$(ALL_PACKAGES)" "$(TESTS)" "$(TESTFLAGS)"
 
+test-server-circleci: go-junit-report do-cover-file
+	@echo "Packages to test: "$(TE_PACKAGES)
+
+	@for package in $(TE_PACKAGES); do \
+		echo "Testing "$$package; \
+		./scripts/test.sh "$(GO)" "$(GOFLAGS)" $$package "$(TESTS)" "$(TESTFLAGS)"; \
+	done
+
+ifeq ($(BUILD_ENTERPRISE_READY),true)
+	@echo "Packages to test: "$(EE_PACKAGES)
+
+	@for package in $(EE_PACKAGES); do \
+		echo "Testing "$$package; \
+		./scripts/test.sh "$(GO)" "$(GOFLAGS)" $$package "$(TESTS)" "$(TESTFLAGS)"; \
+	done
+endif
+
 internal-test-web-client: ## Runs web client tests.
 	$(GO) run $(GOFLAGS) $(PLATFORM_FILES) test web_client_tests
 
